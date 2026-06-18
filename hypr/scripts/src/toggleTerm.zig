@@ -119,7 +119,7 @@ pub fn handle_grouping(alloc: std.mem.Allocator) !void {
             },
 
             else => {
-                try socket.writeAll("dispatch changegroupactive f");
+                try socket.writeAll("/dispatch hl.dsp.group.next()");
             }
         } 
     }
