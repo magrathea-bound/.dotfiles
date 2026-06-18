@@ -1,0 +1,5 @@
+require("hypruser/hyprKeybinds")
+require("hypruser/hyprStart")
+require("hypruser/hyprGui")
+require("hypruser/hyprInput")
+require("hypruser/hyprRules")
