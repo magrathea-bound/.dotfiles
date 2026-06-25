@@ -8,6 +8,7 @@ alias ll='ls -Al'
 alias gs='git status'
 alias ls='ls --color=auto'
 alias mv='mv -i'
+alias py='python'
 
 # Jump commands
 bind -x '"\e.":cd ..; echo "Moved to: $PWD"'

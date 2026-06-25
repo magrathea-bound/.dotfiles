@@ -1,2 +1,3 @@
 hypr/scripts/zig-out/
 hypr/scripts/.zig-cache
+__pycache__/

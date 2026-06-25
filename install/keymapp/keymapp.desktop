@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Keymapp
+Comment=Keyboard mapping tool from Oryx
+Exec=/usr/local/bin/keymapp
+Type=Application
+Categories=Utility;
