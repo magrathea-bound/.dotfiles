@@ -4,13 +4,16 @@ export PS1='[\[\e[1;31m\]\u\[\e[0m\] \[\e[1;32m\]\W\[\e[0m\]]\$ '
 
 # Aliases
 alias dd='cd'
-alias ll='ls -al'
+alias ll='ls -Al'
 alias gs='git status'
 alias ls='ls --color=auto'
+alias mv='mv -i'
 
 # Jump commands
+bind -x '"\e.":cd ..; echo "Moved to: $PWD"'
+
 fzd() {
-    dir="$(find /home/bravedave/ -type d 2>/dev/null | fzf)" || return
+    dir="$(find $HOME -type d 2>/dev/null | fzf)" || return
     [ -n  "$dir" ] || return
     cd "$dir" || return
 }
@@ -18,15 +21,12 @@ bind -x '"\ej": fzd'
 
 fzn() {
     local dir
-    dir="$(find /home/bravedave/ -type d 2>/dev/null | fzf)" || return
+    dir="$(find $HOME -type d 2>/dev/null | fzf)" || return
     [ -n  "$dir" ] || return
     cd "$dir" || return
     nvim .
 }
 bind -x '"\en": fzn'
-
-bind -x '"\e.":cd ..; echo "Moved to: $PWD"'
-
 
 
 # # .bashrc
