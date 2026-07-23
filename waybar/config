@@ -42,7 +42,7 @@
         }
     },
     "custom/weather": {
-        "exec": "curl https://wttr.in/?format=1 | sed -e 's/🌤️/󰖕/g' -e 's/🌧//g' -e 's/🌦//g'",
+        "exec": "curl https://wttr.in/?format=1 | sed -e 's/🌤️/󰖕/g' -e 's/🌧//g' -e 's/🌦//g' -e 's/🌫️//g'",
         "interval": 3600,
         "format": "{}",
         "tooltip": true

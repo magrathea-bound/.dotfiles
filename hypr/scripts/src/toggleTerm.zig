@@ -2,11 +2,12 @@ const std = @import("std");
 const hypr = @import("hyprLib.zig");
 
 const ToggleTermError = error{
-    PIDNotFound,
+    ActiveWindowPIDNotFound,
+    ChildPIDNotFound,
     PathNotFound
 };
 
-fn grab_shell_pid(term_pid: i64, alloc: std.mem.Allocator, buf: []u8) ![]const u8 {
+fn grab_child_pid(term_pid: i64, alloc: std.mem.Allocator, buf: []u8) ![]const u8 {
 
     const pid_str: []u8 = try std.fmt.bufPrint(buf, "{d}", .{term_pid}); 
     const pid_children = try std.process.Child.run(.{
@@ -36,12 +37,12 @@ fn grab_shell_pid(term_pid: i64, alloc: std.mem.Allocator, buf: []u8) ![]const u
             return slice;
         }
     }
-    return ToggleTermError.PIDNotFound;
+    return ToggleTermError.ChildPIDNotFound;
 }
 
 
-fn grab_term_pid(jParse: std.json.Value) !i64 {
-    const pid_key = jParse.object.get("pid") orelse return ToggleTermError.PIDNotFound;
+fn grab_active_window_pid(jParse: std.json.Value) !i64 {
+    const pid_key = jParse.object.get("pid") orelse return ToggleTermError.ActiveWindowPIDNotFound;
     return pid_key.integer;
 }
 
@@ -65,11 +66,10 @@ fn pwdx_process(alloc: std.mem.Allocator, pid: []const u8) ![]const u8 {
 }
 
 fn grab_path(jParse: std.json.Value, alloc: std.mem.Allocator) ![]const u8 {
-    const term_pid: i64 = try grab_term_pid(jParse);
+    const term_pid: i64 = try grab_active_window_pid(jParse);
 
     var buf: [15]u8 = undefined;
-    const pid: []const u8 = try grab_shell_pid(term_pid, alloc, &buf);
-
+    const pid: []const u8 = try grab_child_pid(term_pid, alloc, &buf);
     return try pwdx_process(alloc, pid);
 }
 
@@ -88,7 +88,7 @@ pub fn handle_grouping(alloc: std.mem.Allocator) !void {
         switch (gs.array.items.len) {
             0 => {
                 const path: []const u8 = grab_path(jParse, alloc) catch |err| {
-                    try socket.writeAll("/dispatch togglegroup");
+                    try socket.writeAll("/dispatch hl.dsp.group.toggle()");
                     return err;
             };
                 defer alloc.free(path);
@@ -105,7 +105,7 @@ pub fn handle_grouping(alloc: std.mem.Allocator) !void {
 
             1 => {
                 const path: []const u8 = grab_path(jParse, alloc) catch |err| {
-                    try socket.writeAll("/dispatch exec alacritty");
+                    try socket.writeAll("/dispatch hl.dsp.exec_cmd(\"alacritty\")");
                     return err;
             };
                 defer alloc.free(path);

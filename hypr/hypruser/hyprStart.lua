@@ -18,6 +18,7 @@ hl.monitor({
 local wallpaper   = "hyprpaper"
 local notify      = "mako"
 local idler       = "hypridle"
+local bar       = "waybar"
 
 
 -------------------
@@ -29,10 +30,11 @@ local idler       = "hypridle"
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
 --
-hl.on("hyprland.start", function () 
+hl.on("hyprland.start", function ()
   hl.exec_cmd(wallpaper)
   hl.exec_cmd(notify)
   hl.exec_cmd(idler)
+  hl.exec_cmd(bar)
 end)
 
 

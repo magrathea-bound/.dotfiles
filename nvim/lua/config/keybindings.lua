@@ -2,6 +2,7 @@
 --**KeyMaps**--
 local opts = {noremap = true, silent = true}
 local keymap = vim.keymap.set
+local userF = require("config.userFunctions")
 
 keymap("n", "<C-b>", ":bnext<CR>", opts)
 
@@ -16,7 +17,7 @@ keymap("n", "<leader>xY", [["+Y]])
 
 --Add Lines 
 keymap("n", "<Leader>xo", "o<ESC>k")
-keymap("n", "<Leader>xO", "O<ESC>j")
+keymap("n", "<Leader>xO", "O<ESC>")
 
 --Seach highlight removal
 keymap("n", "<Leader>xh", ":nohlsearch<CR>", {silent = true})
@@ -26,7 +27,7 @@ keymap("n", "<M-h>", vim.cmd.bprevious)
 keymap("n", "<M-l>", vim.cmd.bnext)
 keymap("n", "<Leader>bn", vim.cmd.bnext)
 keymap("n", "<Leader>bp", vim.cmd.bprevious)
-keymap("n", "<Leader>bk", vim.cmd.bdelete)
+keymap("n", "<Leader>bk", userF.Preserve_Window_Bdelete)
 
 --File Explorer
 keymap("n", "<leader>e", vim.cmd.Ex)
