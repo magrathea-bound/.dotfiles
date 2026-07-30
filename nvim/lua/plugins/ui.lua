@@ -8,8 +8,7 @@ return {
     -- New 0.12 API: no more .configs in the require path
     require("nvim-treesitter.config").setup({
       -- A list of parser names, or "all"
-      ensure_installed = { "lua", "vim", "vimdoc", "markdown", "markdown_inline",
-      "python", "svelte", "html", "css", "javascript", "typescript"},
+      ensure_installed = { "lua", "vim"},
       
       -- Automatically install missing parsers when entering buffer
       auto_install = true,

@@ -11,15 +11,15 @@ prompt(){
     git_status="$(__git_ps1 '(%s)')"
     
     local user
-    user="\[\e[1;31m\]\u\[\e[0m\]"
+    user="\[\e[1;91m\]\u\[\e[0m\]"
 
     local cwd
-    cwd="\[\e[1;32m\]\W\[\e[0m\]"
+    cwd="\[\e[1;94m\]\W\[\e[0m\]"
 
     if [[ -n "$git_status" ]]; then
-        PS1="\n${git_status}\n[${user} ${cwd}] "
+        PS1="\n${git_status}\n ${user} ${cwd} 󱃅 "
     else
-        PS1="[${user} ${cwd}] "
+        PS1=" ${user} ${cwd} 󱃅 "
     fi
 }
 PROMPT_COMMAND=prompt

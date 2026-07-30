@@ -13,7 +13,7 @@ function M.Preserve_Window_Bdelete()
         and vim.fn.bufwinid(alt) == -1 then
         vim.cmd("bdelete " .. alt)
     else
-        print("Alternate buffer is not hidden")
+        print("Alternate buffer in other window")
     end
 
 end
