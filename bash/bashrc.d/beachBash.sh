@@ -58,6 +58,13 @@ fzn() {
 }
 bind -x '"\en": fzn'
 
+# FZF Bash History
+bash_history() {
+    cmd="$(cat $HOME/.bash_history 2>/dev/null | fzf)" || return
+    [ -n  "$cmd" ] || return
+    $cmd || return
+}
+bind -x '"\er": bash_history'
 
 # # .bashrc
 # # .bashrc file uncomment and stick in home directory
