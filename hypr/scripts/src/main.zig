@@ -1,23 +1,31 @@
 const std = @import("std");
 const scripts = @import("scripts");
 const term = @import("toggleTerm.zig");
+const sth = @import("structs_helper.zig");
 
-pub fn main() !void {
-    var gpa = std.heap.DebugAllocator(.{}){};
-    defer _ = gpa.deinit();
-    const alloc = gpa.allocator();
 
-    term.handle_grouping(alloc) catch |err| {
-       const notify = try std.process.Child.run(.{
-           .allocator = alloc,
+pub fn main(init: std.process.Init) !void {
+
+    const ess: sth.Essentials = sth.Essentials {
+        .alloc = init.gpa,
+        .io = init.io,
+        .env = init.environ_map,
+    };
+    // defer _ = ess.alloc.;
+
+    term.handle_grouping(ess) catch |err| {
+       const notify = try std.process.run(
+           ess.alloc,
+           ess.io,
+           .{
            .argv = &.{
                "notify-send",
                "Hypr Helper",
                @errorName(err)
            }
        });
-    alloc.free(notify.stdout);
-    alloc.free(notify.stderr);
+    ess.alloc.free(notify.stdout);
+    ess.alloc.free(notify.stderr);
 };
 }
 
