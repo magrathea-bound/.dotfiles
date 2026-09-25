@@ -33,7 +33,7 @@
             "mode-mon-col": 3,
             "on-scroll":1,
             "format": {
-                "today": "<span color='#fAfBfC'><b>{}</b></span>"
+                "today": "<span color='#BD1405'><b>{}</b></span>"
             }
         },
         "actions": {

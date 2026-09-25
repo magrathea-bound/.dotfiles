@@ -1,4 +1,7 @@
 
+# Sudo editor
+export SUDO_EDITOR=nvim
+
 # Prompt Options
 source /usr/share/git/completion/git-prompt.sh
 export GIT_PS1_SHOWDIRTYSTATE=1
@@ -36,27 +39,19 @@ alias py='python'
 bind -x '"\e.":cd ..; echo "Moved to: $PWD"'
 
 fzd() {
-    dir="$(find $HOME -type d 2>/dev/null | fzf)" || return
+    dir="$(find $PWD -type d 2>/dev/null | fzf)" || return
     [ -n  "$dir" ] || return
     cd "$dir" || return
 }
 bind -x '"\ej": fzd'
 
-fzwd() {
+fzn() {
     dir="$(find $PWD -type d 2>/dev/null | fzf)" || return
     [ -n  "$dir" ] || return
-    cd "$dir" || return
-}
-bind -x '"\ep": fzwd'
-
-fzn() {
-    local dir
-    dir="$(find $HOME -type d 2>/dev/null | fzf)" || return
-    [ -n  "$dir" ] || return
-    cd "$dir" || return
-    nvim .
+    nvim "$dir" || return
 }
 bind -x '"\en": fzn'
+
 
 # FZF Bash History
 bash_history() {
@@ -65,6 +60,7 @@ bash_history() {
     $cmd || return
 }
 bind -x '"\er": bash_history'
+
 
 # # .bashrc
 # # .bashrc file uncomment and stick in home directory

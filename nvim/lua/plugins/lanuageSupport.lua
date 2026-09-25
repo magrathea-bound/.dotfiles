@@ -103,13 +103,10 @@ return {
                 "hrsh7th/cmp-cmdline",
                 "l3mon4d3/luasnip",
                 "saadparwaiz1/cmp_luasnip",
-                "rafamadriz/friendly-snippets",
             },
             config = function()
                 local cmp = require("cmp")
                 local luasnip = require("luasnip")
-
-                require("luasnip.loaders.from_vscode").lazy_load()
 
                 cmp.setup({
                     snippet = {
@@ -129,44 +126,6 @@ return {
                         { name = "path" },
                     }),
                 })
-            end,
-        },
-
-        {
-            "l3mon4d3/luasnip",
-            version = "v2.*", -- replace <currentmajor> by the latest released major (first number of latest release)
-            build = "make install_jsregexp",
-
-            dependencies = { "rafamadriz/friendly-snippets" },
-
-            config = function()
-                local ls = require("luasnip")
-
-                require("luasnip.loaders.from_vscode").lazy_load()
-
-                vim.keymap.set({"i"}, "<c-s>e", function() ls.expand() end, {silent = true})
-
-                vim.keymap.set({"i", "s"}, "<c-e>", function()
-                    if ls.choice_active() then
-                        ls.change_choice(1)
-                    end
-                end, {silent = true})
-
-                vim.keymap.set({ "i", "s" }, "<c-j>", function()
-                    if ls.expand_or_jumpable() then
-                        ls.expand_or_jump()
-                    else
-                        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<c-j>", true, false, true), "n", true)
-                    end
-                end, { silent = true, desc = "jump to next snippet placeholder" })
-
-                vim.keymap.set({ "i", "s" }, "<c-k>", function()
-                    if ls.jumpable(-1) then
-                        ls.jump(-1)
-                    else
-                        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<c-k>", true, false, true), "n", true)
-                    end
-                end, { silent = true, desc = "jump to previous snippet placeholder" })
             end,
         },
 

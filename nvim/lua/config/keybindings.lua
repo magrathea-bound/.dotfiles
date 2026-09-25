@@ -1,10 +1,10 @@
-
 --**KeyMaps**--
 local opts = {noremap = true, silent = true}
 local keymap = vim.keymap.set
 local userF = require("config.userFunctions")
 
-keymap("n", "<C-b>", ":bnext<CR>", opts)
+--:W to :w
+vim.api.nvim_create_user_command("W", "write", {})
 
 --Leader Commands--
 vim.g.mapleader = " "
@@ -22,6 +22,9 @@ keymap("n", "<Leader>xO", "O<ESC>")
 --Seach highlight removal
 keymap("n", "<Leader>xh", ":nohlsearch<CR>", {silent = true})
 
+--Refresh files
+keymap("n", "<Leader>xr", ":checktime<CR>", opts)
+
 --BufferCommands
 keymap("n", "<M-h>", vim.cmd.bprevious)
 keymap("n", "<M-l>", vim.cmd.bnext)
@@ -29,7 +32,7 @@ keymap("n", "<Leader>bn", vim.cmd.bnext)
 keymap("n", "<Leader>bp", vim.cmd.bprevious)
 keymap("n", "<Leader>bk", userF.Preserve_Window_Bdelete)
 
---File Explorer
+--Netrw
 keymap("n", "<leader>e", vim.cmd.Ex)
 
 --Experimentation on some shpiffy Primeagen commands
