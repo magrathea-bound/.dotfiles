@@ -12,13 +12,29 @@ return {
                 automatic_installation = true,
             })
 
+            --Begin Sizzls shenanigans
+            -- vim.lsp.config("sizzls", {
+            --     cmd = {
+            --         "/home/bravedave/src/sizzls/zig-out/bin/sizzls",
+            --     },
+            --     filetypes = { "zig" },
+            -- })
+            -- vim.lsp.enable("sizzls")
+            --End Sizzls shenanigans
+
+
             vim.api.nvim_create_autocmd('LspAttach', {
                 callback = function(args)
                     local bufnr = args.buf
                     local opts = { noremap = true, silent = true, buffer = bufnr }
+                    vim.keymap.set('n', '<leader>lr', vim.cmd.LspRestart, opts)
                     vim.keymap.set('n', '<leader>lk', vim.lsp.buf.hover, opts)
                     vim.keymap.set('n', '<leader>ls', vim.lsp.buf.signature_help, opts)
-                    vim.keymap.set('n', '<leader>le', vim.diagnostic.open_float, opts)
+                    vim.keymap.set('n', '<leader>len', vim.diagnostic.goto_next, opts)
+                    vim.keymap.set('n', '<leader>lep', vim.diagnostic.goto_prev, opts)
+                    vim.keymap.set('n', '<leader>leq', vim.diagnostic.setqflist, opts)
+                    vim.keymap.set('n', '<M-e>', vim.diagnostic.open_float, opts)
+
                 end,
             })
 
@@ -56,7 +72,6 @@ return {
                 on_attach = function(client, _)
                     -- Disable Tailwind color backgrounds
                     client.server_capabilities.colorProvider = false
-
                 end,
             })
             vim.lsp.enable("tailwindcss")

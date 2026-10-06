@@ -18,6 +18,8 @@ keymap("n", "<leader>xY", [["+Y]])
 --Add Lines 
 keymap("n", "<Leader>xo", "o<ESC>k")
 keymap("n", "<Leader>xO", "O<ESC>")
+keymap("n", "<M-o>", "o<ESC>k")
+keymap("n", "<M-O>", "O<ESC>j")
 
 --Seach highlight removal
 keymap("n", "<Leader>xh", ":nohlsearch<CR>", {silent = true})
@@ -31,6 +33,15 @@ keymap("n", "<M-l>", vim.cmd.bnext)
 keymap("n", "<Leader>bn", vim.cmd.bnext)
 keymap("n", "<Leader>bp", vim.cmd.bprevious)
 keymap("n", "<Leader>bk", userF.Preserve_Window_Bdelete)
+keymap("n", "<Leader>bs", vim.cmd.Scratch)
+keymap({"n", "i"}, "<M-s>", vim.cmd.Scratch)
+
+
+--Easy window
+vim.keymap.set("n", "<C-h>", "<C-w>h", opts)
+vim.keymap.set("n", "<C-j>", "<C-w>j", opts)
+vim.keymap.set("n", "<C-k>", "<C-w>k", opts)
+vim.keymap.set("n", "<C-l>", "<C-w>l", opts)
 
 --Netrw
 keymap("n", "<leader>e", vim.cmd.Ex)
@@ -41,15 +52,12 @@ keymap("n", "<leader>e", vim.cmd.Ex)
 keymap("v", "J", ":m '>+1<CR>gv=gv")
 keymap("v", "K", ":m '<-2<CR>gv=gv")
 
+--keymap("n", "J", "mzJ`z")
 --keeps cursor still with J
-keymap("n", "J", "mzJ`z")
 
 --Keeps cursor in middle with search
 keymap("n", "n", "nzzzv")
 keymap("n", "N", "Nzzzv")
-
---Search and replace for current word 
-keymap("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 --The real important commands
 keymap("n", "<Leader>FF", "<cmd>CellularAutomaton make_it_rain<CR>")
