@@ -31,6 +31,7 @@ PROMPT_COMMAND=prompt
 alias dd='cd'
 alias ll='ls -Al'
 alias gs='git status'
+source ~/.dotfiles/bash/bashrc.d/lscolors.sh
 alias ls='ls --color=auto'
 alias mv='mv -i'
 alias py='python'
@@ -38,19 +39,28 @@ alias py='python'
 # Jump commands
 bind -x '"\e.":cd ..; echo "Moved to: $PWD"'
 
-fzd() {
-    dir="$(find $PWD -type d 2>/dev/null | fzf)" || return
+# Fuzzy commands
+gsw() {
+    local branch
+    branch=$(git branch --format='%(refname:short)' | fzf --height=40%) || return
+    git switch "$branch"
+}
+
+
+fz_dir() {
+    dir="$(find $HOME -type d 2>/dev/null | fzf)" || return
     [ -n  "$dir" ] || return
     cd "$dir" || return
 }
-bind -x '"\ej": fzd'
+bind -x '"\ej": fz_dir'
 
-fzn() {
-    dir="$(find $PWD -type d 2>/dev/null | fzf)" || return
+fz_nvim() {
+    dir="$(find $HOME -type d 2>/dev/null | fzf)" || return
     [ -n  "$dir" ] || return
+    cd "$dir" || return
     nvim "$dir" || return
 }
-bind -x '"\en": fzn'
+bind -x '"\en": fz_nvim'
 
 
 # FZF Bash History
