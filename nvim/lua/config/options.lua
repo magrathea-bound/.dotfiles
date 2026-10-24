@@ -12,7 +12,6 @@ o.number = true
 
 o.smartcase = true
 o.incsearch = true
-o.hlsearch = false
 
 o.splitbelow = true
 o.splitright = true
