@@ -18,13 +18,13 @@ keymap("n", "<leader>xY", [["+Y]])
 keymap("n", "<Leader>xr", ":checktime<CR>", opts)
 
 --Add Lines 
-keymap("n", "<Leader>co", "o<ESC>k")
-keymap("n", "<Leader>cO", "O<ESC>")
+keymap("n", "<Leader>xo", "o<ESC>k")
+keymap("n", "<Leader>xO", "O<ESC>")
 keymap("n", "<M-o>", "o<ESC>k")
 keymap("n", "<M-O>", "O<ESC>j")
 
 --Seach highlight removal
-keymap("n", "<Leader>ch", ":nohlsearch<CR>", {silent = true})
+keymap("n", "<Leader>xh", ":nohlsearch<CR>", {silent = true})
 
 --BufferCommands
 keymap("n", "<M-h>", vim.cmd.bprevious)
@@ -42,9 +42,9 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", opts)
 vim.keymap.set("n", "<C-l>", "<C-w>l", opts)
 
 --Misc Commands
-vim.keymap.set({"n","v"}, "<Leader>cd", u.remove_duplicate_lines, opts)
-vim.keymap.set({"n","v"}, "<Leader>cq", u.format_sql_list, opts)
-vim.keymap.set({"n","v"}, "<Leader>cQ", function ()
+vim.keymap.set({"n","v"}, "<Leader>xd", u.remove_duplicate_lines, opts)
+vim.keymap.set({"n","v"}, "<Leader>xq", u.format_sql_list, opts)
+vim.keymap.set({"n","v"}, "<Leader>xQ", function ()
     u.remove_duplicate_lines()
     u.format_sql_list()
 end, opts)
