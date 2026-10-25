@@ -7,14 +7,14 @@ function M.Preserve_Window_Bdelete()
     local alt = vim.fn.bufnr("#")
     if alt < 1
         and vim.fn.bufloaded(alt) == 1 then
-        print("No alternate buffer")
+        print("No other buffers")
     end
 
     if vim.fn.bufexists(alt) == 1
         and vim.fn.bufwinid(alt) == -1 then
         vim.cmd("bdelete " .. alt)
     else
-        print("Alternate buffer not hidden")
+        print("Buffer not hidden")
     end
 
 end
@@ -67,8 +67,25 @@ vim.api.nvim_create_user_command(
 )
 
 function M.remove_duplicate_lines()
-    local bufnr = vim.api.nvim_get_current_buf()
-    local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+    local start_line, end_line
+
+    if vim.fn.mode():match("[vV\22]") then
+        local start_pos = vim.fn.getpos("v")
+        local end_pos = vim.fn.getpos(".")
+
+        start_line = math.min(start_pos[2], end_pos[2])
+        end_line = math.max(start_pos[2], end_pos[2])
+    else
+        start_line = 1
+        end_line = vim.api.nvim_buf_line_count(0)
+    end
+
+    local lines = vim.api.nvim_buf_get_lines(
+        0,
+        start_line - 1,
+        end_line,
+        false
+    )
 
     local seen = {}
     local unique = {}
@@ -80,7 +97,13 @@ function M.remove_duplicate_lines()
         end
     end
 
-    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, unique)
+    vim.api.nvim_buf_set_lines(
+        0,
+        start_line - 1,
+        end_line,
+        false,
+        unique
+    )
 end
 
 vim.api.nvim_create_user_command(
@@ -91,19 +114,43 @@ vim.api.nvim_create_user_command(
 
 function M.format_sql_list()
     local bufnr = vim.api.nvim_get_current_buf()
-    local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+    local start_line, end_line
+
+    if vim.fn.mode():match("[vV\22]") then
+        local start_pos = vim.fn.getpos("v")
+        local end_pos = vim.fn.getpos(".")
+
+        start_line = math.min(start_pos[2], end_pos[2])
+        end_line = math.max(start_pos[2], end_pos[2])
+    else
+        start_line = 1
+        end_line = vim.api.nvim_buf_line_count(bufnr)
+    end
+
+    local lines = vim.api.nvim_buf_get_lines(
+        bufnr,
+        start_line - 1,
+        end_line,
+        false
+    )
 
     local items = {}
 
     for i, line in ipairs(lines) do
-        items[i] = "'"..line.."',"
+        items[i] = "'" .. line .. "',"
     end
 
-    local last_item = items[#items]
-    last_item = string.sub(last_item,0, -2)
-    items[#items] = last_item
+    if #items > 0 then
+        items[#items] = string.sub(items[#items], 1, -2)
+    end
 
-    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, items)
+    vim.api.nvim_buf_set_lines(
+        bufnr,
+        start_line - 1,
+        end_line,
+        false,
+        items
+    )
 end
 
 vim.api.nvim_create_user_command(

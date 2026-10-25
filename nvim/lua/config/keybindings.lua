@@ -33,6 +33,7 @@ keymap("n", "<Leader>bn", vim.cmd.bnext)
 keymap("n", "<Leader>bp", vim.cmd.bprevious)
 keymap("n", "<Leader>bk", u.Preserve_Window_Bdelete)
 keymap({"n", "i"}, "<M-s>", u.toggle_scratch)
+keymap("n", "<M-Tab>", "<C-^>", opts)
 
 --Easy window
 vim.keymap.set("n", "<C-h>", "<C-w>h", opts)
@@ -41,12 +42,14 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", opts)
 vim.keymap.set("n", "<C-l>", "<C-w>l", opts)
 
 --Misc Commands
-vim.keymap.set("n", "<Leader>cd", u.remove_duplicate_lines, opts)
-vim.keymap.set("n", "<Leader>cq", u.format_sql_list, opts)
-vim.keymap.set("n", "<Leader>cQ", function ()
+vim.keymap.set({"n","v"}, "<Leader>cd", u.remove_duplicate_lines, opts)
+vim.keymap.set({"n","v"}, "<Leader>cq", u.format_sql_list, opts)
+vim.keymap.set({"n","v"}, "<Leader>cQ", function ()
     u.remove_duplicate_lines()
     u.format_sql_list()
 end, opts)
+vim.keymap.set("c", "<M-c>", [[\(.*\)]], opts)
+vim.keymap.set("c", "<M-C>", [[\(\)<Left><Left>]], opts)
 
 --Some shpiffy Primeagen commands
 --https://github.com/ThePrimeagen/init.lua/blob/master/lua/theprimeagen/remap.lua

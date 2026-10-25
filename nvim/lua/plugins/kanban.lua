@@ -1,6 +1,3 @@
-if sysname == "Linux" then
-    return {}
-end
 return {
     {
         "arakkkkk/kanban.nvim",
@@ -18,8 +15,4 @@ return {
             })
         end,
     },
-
-    {
-        "benlubas/molten-nvim"
-    }
 }
