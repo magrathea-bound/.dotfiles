@@ -1,7 +1,7 @@
 --**KeyMaps**--
 local opts = {noremap = true, silent = true}
 local keymap = vim.keymap.set
-local u = require("config.functions")
+local u = require("config.functions.braveDavesCommands")
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -41,15 +41,17 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", opts)
 vim.keymap.set("n", "<C-k>", "<C-w>k", opts)
 vim.keymap.set("n", "<C-l>", "<C-w>l", opts)
 
---Misc Commands
-vim.keymap.set({"n","v"}, "<Leader>xd", u.remove_duplicate_lines, opts)
-vim.keymap.set({"n","v"}, "<Leader>xq", u.format_sql_list, opts)
-vim.keymap.set({"n","v"}, "<Leader>xQ", function ()
-    u.remove_duplicate_lines()
-    u.format_sql_list()
+--Text formatting
+vim.keymap.set({"n","v"}, "<Leader>td", u.text.remove_duplicate_lines, opts)
+vim.keymap.set({"n","v"}, "<Leader>tc", u.text.format_sql_list, opts)
+vim.keymap.set({"n","v"}, "<Leader>tq", u.text.format_sql_list, opts)
+vim.keymap.set({"n","v"}, "<Leader>tQ", function ()
+    u.text.remove_duplicate_lines()
+    u.text.format_sql_list()
 end, opts)
-vim.keymap.set("c", "<M-c>", [[\(.*\)]], opts)
-vim.keymap.set("c", "<M-C>", [[\(\)<Left><Left>]], opts)
+
+--Misc Commands
+vim.keymap.set("n", "<Leader>k", ":KanbanOpen tasks.md", opts)
 
 --Some shpiffy Primeagen commands
 --https://github.com/ThePrimeagen/init.lua/blob/master/lua/theprimeagen/remap.lua
